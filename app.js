@@ -27,11 +27,9 @@ app.use(async (ctx,next) => {
     if(!ctx.request.body.user_id) {
       return
     }
-    if(ctx.query.password = 'dancebox') {
-      await setMessage(ctx.request.body, ctx.request.body.user_id)
-      ctx.body = {
-        success: true
-      }
+    await setMessage(ctx.request.body, ctx.request.body.user_id)
+    ctx.body = {
+      success: true
     }
   }else {
     await next()

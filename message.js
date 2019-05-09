@@ -45,11 +45,13 @@ async function setMessage(message, user_id) {
     time: Date.now(),
   }
   await redis.lpush('message:' +user_id , JSON.stringify(obj))
-
+  // console.log(user_id)
   if(ConnectionList[ 'function_' +user_id]) {
     let len = await redis.llen('message:' +user_id)
-    console.log(len)
+    // console.log(len)
     ConnectionList[ 'function_' +user_id](len)
+  }else{
+    console.log('没有这个函数')
   }
 }
 
