@@ -19,7 +19,6 @@ ws.on('connection', function connection(connection,req, user_info) {
   })
   connection.on('close', function(reasonCode, description) {
     // delete  ConnectionList[ 'function_' +user_id]
-
     console.log('-----')
     console.log(reasonCode)
     console.log(description)

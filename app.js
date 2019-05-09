@@ -48,18 +48,18 @@ server.on('upgrade', async function upgrade(request, socket, head) {
   if (pathname === '/ws') {
     // console.log(request.headers)
 
-    // if(!request.headers['sessiontoken']) {
-    //   socket.destroy();
-    // }
-    //
-    // let user_info = redis.hgetall('session:' + request.headers['sessiontoken'])
-    //
-    // if(!user_info) {
-    //   socket.destroy();
-    // }
-      let user_info = {
-        user_id: 123
-      }
+    if(!request.headers['sessiontoken']) {
+      socket.destroy();
+    }
+
+    let user_info = redis.hgetall('session:' + request.headers['sessiontoken'])
+
+    if(!user_info) {
+      socket.destroy();
+    }
+      // let user_info = {
+      //   user_id: 123
+      // }
     ws.handleUpgrade(request, socket, head, function done(connection) {
       ws.emit('connection', connection, request, user_info);
     })
