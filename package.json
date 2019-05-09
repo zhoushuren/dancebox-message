@@ -1,0 +1,26 @@
+{
+  "name": "dancebox-message",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhoushuren/dancebox-message.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhoushuren/dancebox-message/issues"
+  },
+  "homepage": "https://github.com/zhoushuren/dancebox-message#readme",
+  "dependencies": {
+    "bluebird": "^3.5.4",
+    "ioredis": "^4.9.3",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "ws": "^7.0.0"
+  }
+}
