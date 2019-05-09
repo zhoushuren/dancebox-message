@@ -6,20 +6,23 @@ const ws = new WebSocket.Server({ noServer: true })
 
 const ConnectionList = {} //连接的闭包
 
-ws.on('connection', function connection(connection,req, user_info) {
+ws.on('connection',async function connection(connection,req, user_info) {
 
   let user_id = user_info.user_id //这个用户建立连接
-
   ConnectionList[ 'function_' +user_id] = function(data) {
     connection.send(JSON.stringify(data))
   }
 
+  let len = await redis.llen('message:' +user_id)
+  if (len>0) {
+      connection.send(JSON.stringify(len))
+  }
   connection.on('message', function incoming(message) {
 
   })
   connection.on('close', function(reasonCode, description) {
     // delete  ConnectionList[ 'function_' +user_id]
-    console.log('-----')
+    console.log('-----连接断开')
     console.log(reasonCode)
     console.log(description)
   })

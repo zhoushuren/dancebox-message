@@ -52,7 +52,7 @@ server.on('upgrade', async function upgrade(request, socket, head) {
       socket.destroy();
     }
 
-    let user_info = redis.hgetall('session:' + request.headers['sessiontoken'])
+    let user_info = await redis.hgetall('session:' + request.headers['sessiontoken'])
 
     if(!user_info) {
       socket.destroy();
