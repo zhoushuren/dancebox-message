@@ -17,6 +17,12 @@
   socket.addEventListener('message', function (event) {
     console.log('Message from server ', event.data);
   });
+
+  function del() {
+    socket.close()
+  }
 </script>
+
+<button onclick="del">断开</button>
 </body>
 </html>
