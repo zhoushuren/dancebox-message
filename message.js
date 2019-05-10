@@ -7,7 +7,6 @@ const ws = new WebSocket.Server({ noServer: true })
 const ConnectionList = {} //连接的闭包
 
 ws.on('connection',async function connection(connection,req, user_info) {
-
   let user_id = user_info.user_id //这个用户建立连接
   ConnectionList[ 'function_' +user_id] = function(data) {
     connection.send(JSON.stringify(data))
@@ -26,7 +25,6 @@ ws.on('connection',async function connection(connection,req, user_info) {
     console.log(reasonCode)
     console.log(description)
   })
-
 });
 
 //消息类型
@@ -38,12 +36,15 @@ ws.on('connection',async function connection(connection,req, user_info) {
 * */
 
 //给哪个userid发消息
-async function setMessage(message, user_id) {
-  let obj = {
-    type: message.type,
-    content: message.content,
-    time: Date.now(),
+async function setMessage({to_user_id,from_user_info,from_content, content,type,_id }) {
+  let obj = {from_user_info,from_content, content,type,_id,to_user_id }
+  let user_id = to_user_id
+
+  if(!user_id) {
+    return
   }
+  console.log('接收到的消息', obj)
+
   await redis.lpush('message:' +user_id , JSON.stringify(obj))
   // console.log(user_id)
   if(ConnectionList[ 'function_' +user_id]) {

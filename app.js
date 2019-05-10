@@ -24,10 +24,10 @@ app.use(bodyParser())
 app.use(async (ctx,next) => {
   if(ctx.path.indexOf('/message') >=0) {
     //这个服务是向外暴露的，搞个简单的密码即可
-    if(!ctx.request.body.user_id) {
+    if(!ctx.request.body.to_user_id) {
       return
     }
-    await setMessage(ctx.request.body, ctx.request.body.user_id)
+    await setMessage(ctx.request.body)
     ctx.body = {
       success: true
     }
@@ -44,7 +44,7 @@ const server = app.listen(port,host)
 server.on('upgrade', async function upgrade(request, socket, head) {
   const pathname = url.parse(request.url).pathname;
   if (pathname === '/ws') {
-    // console.log(request.headers)
+    console.log(request.headers)
 
     if(!request.headers['sessiontoken']) {
       socket.destroy();
@@ -55,6 +55,7 @@ server.on('upgrade', async function upgrade(request, socket, head) {
     if(!user_info) {
       socket.destroy();
     }
+    console.log('connect user: ', user_info)
       // let user_info = {
       //   user_id: 123
       // }
